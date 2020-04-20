@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Counter from "./Counter";
+import CounterAPI from "../apis/CounterAPI";
 import {
   COUNTER_GROUP_INIT_COUNT,
   COUNTER_GROUP_INIT_SUM,
@@ -18,6 +19,12 @@ class CounterGroup extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCalculate = this.onCalculate.bind(this);
+  }
+
+  componentDidMount() {
+    CounterAPI.getNumberOfCounters().then(response => {
+      this.setState({ number: response.data.size });
+    });
   }
 
   onChange(event) {
@@ -38,7 +45,7 @@ class CounterGroup extends Component {
 
   initArray(number) {
     let size = this.props.size;
-    if (number.length > 0) {
+    if (number > 0 || number.length > 0) {
       size = parseInt(number);
     }
     return Array.from(Array(size).keys());
@@ -46,6 +53,7 @@ class CounterGroup extends Component {
 
   render() {
     let countOfCounters = this.initArray(this.state.number);
+    console.log(this.state.number, countOfCounters);
 
     return (
       <div>
