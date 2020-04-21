@@ -4,6 +4,7 @@ import {
   COUNTER_INCREMENT,
   COUNTER_DECREMENT,
 } from "../constants/constants";
+import { StarOutlined } from "@ant-design/icons";
 
 class Counter extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class Counter extends Component {
   render() {
     return (
       <section>
+        <StarOutlined />
         <button onClick={this.onIncrease}>+</button>
         <mark>{this.state.value}</mark>
         <button onClick={this.onDecrease}>-</button>
