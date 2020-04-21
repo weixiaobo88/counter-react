@@ -22,13 +22,22 @@ class CounterGroup extends Component {
   }
 
   componentDidMount() {
-    CounterAPI.getNumberOfCounters().then(response => {
+    CounterAPI.getNumberOfCounters().then((response) => {
       this.setState({ number: response.data.size });
     });
   }
 
   onChange(event) {
-    this.setState({ number: event.target.value, sum: COUNTER_GROUP_INIT_SUM });
+    const value = event.target.value;
+    this.setState({
+      number: value.length > 0 ? parseInt(value) : 0,
+      sum: COUNTER_GROUP_INIT_SUM,
+    });
+    if(value.length > 0) {
+      CounterAPI.putNumberOfCounters(parseInt(value)).then((response) => {
+        console.log(response.data.size);
+      });
+    }
   }
 
   onSubmit(event) {
@@ -44,16 +53,11 @@ class CounterGroup extends Component {
   }
 
   initArray(number) {
-    let size = this.props.size;
-    if (number > 0 || number.length > 0) {
-      size = parseInt(number);
-    }
-    return Array.from(Array(size).keys());
+    return Array.from(Array(number).keys());
   }
 
   render() {
     let countOfCounters = this.initArray(this.state.number);
-    console.log(this.state.number, countOfCounters);
 
     return (
       <div>
@@ -62,6 +66,7 @@ class CounterGroup extends Component {
             <label htmlFor="number">Generate </label>
             <input
               name="number"
+              type="text"
               placeholder="input number here..."
               onChange={this.onChange}
               value={this.state.number}
