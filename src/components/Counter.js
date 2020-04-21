@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Counter extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      number: 0,
+    };
+  }
+
   render() {
     return (
       <div>
         <button>+</button>
-        <span>30</span>
+        <span>{this.state.number}</span>
         <button>-</button>
       </div>
     );
