@@ -21,7 +21,11 @@ class CounterGroup extends Component {
   }
 
   onChange(event) {
-    this.setState({ number: event.target.value, sum: COUNTER_GROUP_INIT_SUM });
+    const value = event.target.value;
+    this.setState({
+      number: value.length > 0 ? parseInt(value) : '',
+      sum: COUNTER_GROUP_INIT_SUM,
+    });
   }
 
   onSubmit(event) {
@@ -37,11 +41,7 @@ class CounterGroup extends Component {
   }
 
   initArray(number) {
-    let size = this.props.size;
-    if (number.length > 0) {
-      size = parseInt(number);
-    }
-    return Array.from(Array(size).keys());
+    return Array.from(Array(number).keys());
   }
 
   render() {
